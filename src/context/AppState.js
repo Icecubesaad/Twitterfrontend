@@ -15,10 +15,18 @@ const AppState = ({ children }) => {
         Username:"",
         Followers:"",
         Following:"",
+        id:"",
         Like_list:[]
     });
+    const [Tweet, setTweet] = useState({
+      Text:"",
+      Author:"",  //id
+      Image:[],
+      ImageClient:[]
+    });
+    const [AllTweets, setAllTweets] = useState([]);
     return (
-      <AppContext.Provider value={{AuthPayload,setAuthPayload,Userinfo, setUserinfo}}>
+      <AppContext.Provider value={{AuthPayload,setAuthPayload,Userinfo, setUserinfo,Tweet,setTweet,AllTweets, setAllTweets}}>
         {children}
       </AppContext.Provider>
     );

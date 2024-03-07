@@ -1,7 +1,7 @@
 
 const fetchUserDetails=async(token)=>{
     console.log(token)
-    const request=await fetch("/api/post/getUser",{
+    const request=await fetch("/api/get/getUser",{
         method:"GET",
         headers:{
             "token":token

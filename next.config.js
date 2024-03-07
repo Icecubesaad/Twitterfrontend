@@ -1,4 +1,8 @@
 module.exports = {
+  reactStrictMode: false,
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
   async rewrites() {
     return [
       {
@@ -20,8 +24,16 @@ module.exports = {
       }
       ,
       {
-        source:"/api/post/getUser",
+        source:"/api/get/getUser",
         destination:"http://localhost:5000/api/get/getUser"
+      },
+      {
+        source:"/api/post/tweet",
+        destination:"http://localhost:5000/api/post/tweet"
+      },
+      {
+        source:"/api/get/getAllTweet",
+        destination:"http://localhost:5000/api/get/getAllTweet"
       }
     ]
   },
