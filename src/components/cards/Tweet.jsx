@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import React from 'react'
-
-function Tweet({text,Username,Key,authorPic,Images,Usertag,imageCount}) {
+import Link from 'next/link'
+function TweetCard({text,Username,Key,authorPic,Images,Usertag,imageCount}) {
   return (
-    <div key={Key} className='w-full h-auto flex flex-col'>
-        <div className='flex flex-row'>
+    <Link href={`/home/tweets/${Key}`} key={Key} className='w-full h-auto flex flex-col border-[1px] pl-5 pb-5 border-white'>
+        <div className='flex flex-row items-center'>
           <div className='bg-slate-600 w-[50px] border-black h-[50px] border-[1px] rounded-full flex justify-center items-center mt-5'>
           <Image
                 src={authorPic}
@@ -14,15 +14,15 @@ function Tweet({text,Username,Key,authorPic,Images,Usertag,imageCount}) {
                 className="border-[1px]  border-black rounded-full"
               />
           </div>
-          <div className='flex flex-col'>
+          <div className='flex flex-col pl-5 mt-5'>
             <h1>{Username}</h1>
-            <p>@{Usertag}</p>
+            <p className=' text-slate-600'>@{Usertag}</p>
           </div>
         </div>
-        <p>
-          {Text}
+        <p className='pl-[70px] text-lg mt-4'>
+          {text}
         </p>
-        <div className="w-full flex justify-center items-center h-auto">
+        <div className="w-full flex justify-center items-center h-auto mt-5">
         {imageCount == 0 ? null : imageCount == 1 ? (
           <div>
             <Image
@@ -118,8 +118,8 @@ function Tweet({text,Username,Key,authorPic,Images,Usertag,imageCount}) {
           </div>
         )}
         </div>
-    </div>
+    </Link>
   )
 }
 
-export default Tweet
+export default TweetCard

@@ -33,7 +33,7 @@ const Page = () => {
     element_to_change.classList.add("active")
   }
   return (
-    <div className="w-full h-full flex flex-col p-5 mt-16 gap-3 border-white border-r-[1px] items-center">
+    <div className="w-full h-full flex flex-col p-5 mt-16 gap-3  items-center">
       <Link
         onMouseEnter={() => {
           changeActiveTab(1);

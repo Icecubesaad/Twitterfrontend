@@ -34,6 +34,10 @@ module.exports = {
       {
         source:"/api/get/getAllTweet",
         destination:"http://localhost:5000/api/get/getAllTweet"
+      },
+      {
+        source:"/api/get/getTweet/:id",
+        destination:"http://localhost:5000/api/get/getTweet/:id"
       }
     ]
   },

@@ -6,17 +6,16 @@ import PollIcon from "@mui/icons-material/Poll";
 import Spinner2 from "../utils/Spinner2";
 import AppContext from "@/context/AppContext";
 import fetchUserDetails from "@/functions/FetchRequest/fetchUserDetails";
-const TweetInput = () => {
+import { CircularProgress } from "@mui/material";
+const TweetInput = ({setposted,setNewTweet}) => {
   const context = useContext(AppContext);
-  const { Tweet, setTweet,Userinfo, setUserinfo } = context;
-  const [Error, setError] = useState(false);
-  const [ErrorMessage, setErrorMessage] = useState("");
+  const { Tweet, setTweet, Userinfo, setUserinfo } = context;
+  const [TweetLoading, setTweetLoading] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [imageCount, setImageCount] = useState(0); // State to track the number of images
   const [ImageGrid, setImageGrid] = useState({
     display: "flex",
   });
-  
   useEffect(() => {
     setImageCount(Tweet.ImageClient.length);
   }, [Tweet.ImageClient]);
@@ -39,7 +38,9 @@ const TweetInput = () => {
         Followers: response.data.Followers,
         Following: response.data.Following,
         Like_list: response.data.Like_list,
-        id:response.data._id
+        id: response.data._id,
+        Username:response.data.Username,
+        Usertag:response.data.Usertag
       });
       setLoading(false);
     } else {
@@ -83,46 +84,52 @@ const TweetInput = () => {
   };
 
   const handleSubmit = async () => {
+    setTweetLoading(true);
     const formData = new FormData();
     formData.append("Text", Tweet.Text);
     formData.append("Author", Userinfo.id);
     Tweet.Image.forEach((image, index) => {
-      formData.append("Image",image)
+      formData.append("Image", image);
     });
     try {
       const request = await fetch("/api/post/tweet", {
         method: "POST",
         body: formData,
       });
-      const response=await request.json();
+      const response = await request.json();
       if (response.success) {
+        setTweetLoading(false);
+        setposted(true)
+        setNewTweet(response.data)
         setTweet({
-          Text:"",
-          ImageClient:[],
-          Image:[],
-          Author:""
-        })        
+          Text: "",
+          ImageClient: [],
+          Image: [],
+          Author: "",
+        });
       } else {
         console.error("Failed to post tweet");
+        setTweetLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
+      setTweetLoading(false);
     }
   };
   useEffect(() => {
-    console.log('component mounted')
+    console.log("component mounted");
     const token = getCookie("token");
     if (!token) {
       setLoading(false);
       router.push("/Login");
     } else {
-      if(Userinfo.Email===""){
+      if (Userinfo.Email === "") {
         fetchUser(token);
       }
     }
   }, []);
   return (
-    <div className="w-full h-[250px] flex flex-col mt-10 gap-10">
+    <div className="w-full h-[250px] flex flex-col mt-10 gap-10 pl-10 pr-10 ">
       <div className="w-full flex flex-row gap-4">
         <div className="w-[10%] flex">
           <div className="bg-slate-600 w-[50px] border-black h-[50px] border-[1px] rounded-full flex justify-center items-center mt-5">
@@ -171,10 +178,14 @@ const TweetInput = () => {
         </div>
         <div>
           <button
-            className="w-auto h-[40px] border-[1px] border-transparent rounded-3xl bg-blue-500 text-white p-4 flex justify-center items-center"
+            className="w-[100px] h-[40px] border-[1px] border-transparent rounded-3xl bg-blue-500 text-white p-4 flex justify-center items-center"
             onClick={handleSubmit}
           >
-            Tweet
+            {TweetLoading ? (
+              <CircularProgress color="inherit" size={30} />
+            ) : (
+              <p>Tweet</p>
+            )}
           </button>
         </div>
       </div>

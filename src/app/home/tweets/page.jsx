@@ -6,25 +6,33 @@ import AppContext from "@/context/AppContext";
 import fetchUserDetails from "@/functions/FetchRequest/fetchUserDetails";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner2 from "@/components/utils/Spinner2";
-import Tweet from "@/components/cards/Tweet";
+import TweetCard from "@/components/cards/Tweet";
 function Page() {
-  const router = useRouter();
   const context = useContext(AppContext);
   const [loading, setloading] = useState(true);
+  const [posted, setposted] = useState(false);
+  const [NewTweet, setNewTweet] = useState(null);
   const [skip, setskip] = useState(0);
   const limit=7;
   const [hasMore, sethasMore] = useState(true);
-  const { AllTweets, setAllTweets } = context;
+  const { AllTweets, setAllTweets,Userinfo } = context;
   const fetchTweets=async()=>{
     try {
+      console.log('fetching tweets')
+      setloading(true)
       const request=  await  fetch(`/api/get/getAllTweet?limit=${limit}&skip=${skip}`,{
         method:"GET",
       })
       const response=await request.json();
       if(response.success&&response.data){
-        setskip(e=>e+7);
-        setAllTweets(e=>[...e,...response.data])
-        sethasMore(true)
+        if(response.data.length===0){
+          sethasMore(false)
+        }
+        else{
+          setskip(e=>e+7);
+          setAllTweets(e=>[...e,...response.data])
+          setloading(false)
+        }
       }
       else{
         setloading(false)
@@ -32,25 +40,36 @@ function Page() {
       }
     } catch (error) {
       sethasMore(false)
+      setloading(false)
       console.log(error)
     }
   }
   useEffect(() => {
-    console.log('component render')
+    fetchTweets()
   }, []);
   return (
-   <div className="w-full pl-10">
-    <h1 className=" font-bold text-xl mt-10">Home</h1>
-        <TweetInput/>
+   <div className="w-full border-white border-r-[1px] border-l-[1px]">
+    <h1 className=" font-bold text-xl mt-10 pl-10">Home</h1>
+        <TweetInput setposted={setposted} setNewTweet={setNewTweet}/>
+        {
+          !posted? null : <TweetCard Key={NewTweet._id} text={NewTweet.Text} Usertag={Userinfo.Username} authorPic={Userinfo.Image} Username={Userinfo.Username} Images={NewTweet.image} imageCount={NewTweet.imageAmount} />
+        }
         {
           AllTweets.length===0?<div className="w-full h-[100px] flex flex-row justify-center items-center"><Spinner2/></div>:
-          <InfiniteScroll dataLength={AllTweets.length} endMessage={"No more tweets"} hasMore={hasMore}>
+          <InfiniteScroll dataLength={AllTweets.length} next={fetchTweets} hasMore={hasMore}>
                 {
                   AllTweets.map((e)=>{
-                    return  <Tweet key={e._id} text={e.Text} Usertag={e.postedBy.Usertag} authorPic={e.postedBy.Image} Username={e.postedBy.Username} Images={e.image} imageCount={e.imageAmount}/>
+                    return  <TweetCard Key={e._id} text={e.Text} Usertag={e.postedBy.Usertag} authorPic={e.postedBy.Image} Username={e.postedBy.Username} Images={e.image} imageCount={e.imageAmount}/>
                   })
                 }
           </InfiniteScroll>
+        }
+        {
+          loading&&AllTweets.length>0&&hasMore?
+        <div className="flex w-full justify-center items-center">
+          <Spinner2/>
+        </div>
+        :<p className="text-md">no more comments</p>
         }
    </div>
   )

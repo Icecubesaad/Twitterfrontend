@@ -16,7 +16,8 @@ const AppState = ({ children }) => {
         Followers:"",
         Following:"",
         id:"",
-        Like_list:[]
+        Like_list:[],
+        Usertag:""
     });
     const [Tweet, setTweet] = useState({
       Text:"",
