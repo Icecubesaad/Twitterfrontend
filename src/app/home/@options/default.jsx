@@ -3,6 +3,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import SettingsIcon from '@mui/icons-material/Settings';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import Link from "next/link";
 import { useState } from "react";
 const Page = () => {
@@ -97,6 +99,38 @@ const Page = () => {
         id="4opt"
       >
         <ChatBubbleOutlineIcon /> Direct
+      </Link>
+      <Link
+        onMouseEnter={() => {
+          changeActiveTab(5);
+        }}
+        onMouseLeave={() => {
+          changePreviousTab(5);
+        }}
+        onClick={()=>{
+            changeActive(5)
+        }}
+        className="opt"
+        href="#"
+        id="5opt"
+      >
+        <NotificationsNoneIcon /> Notifications
+      </Link>
+      <Link
+        onMouseEnter={() => {
+          changeActiveTab(6);
+        }}
+        onMouseLeave={() => {
+          changePreviousTab(6);
+        }}
+        onClick={()=>{
+            changeActive(6)
+        }}
+        className="opt"
+        href="#"
+        id="6opt"
+      >
+        <SettingsIcon /> Settings
       </Link>
     </div>
   );

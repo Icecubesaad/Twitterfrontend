@@ -32,12 +32,28 @@ module.exports = {
         destination:"http://localhost:5000/api/post/tweet"
       },
       {
+        source:"/api/post/comment/:id",
+        destination:"http://localhost:5000/api/post/comment/:id"
+      },
+      {
+        source:"/api/get/getComments/:id",
+        destination:"http://localhost:5000/api/get/getComments/:id"
+      },
+      {
         source:"/api/get/getAllTweet",
         destination:"http://localhost:5000/api/get/getAllTweet"
       },
       {
         source:"/api/get/getTweet/:id",
         destination:"http://localhost:5000/api/get/getTweet/:id"
+      },
+      {
+        source:"/api/get/getComment/:id",
+        destination:"http://localhost:5000/api/get/getComment/:id"
+      },
+      {
+        source:"/api/post/like/:id/:type",
+        destination:"http://localhost:5000/api/post/like/:id/:type"
       }
     ]
   },

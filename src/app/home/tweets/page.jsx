@@ -1,9 +1,7 @@
 'use client'
 import TweetInput from "@/components/Tweet/TweetInput"
-import { useRouter } from "next/navigation";
 import { useState,useEffect,useContext } from "react";
 import AppContext from "@/context/AppContext";
-import fetchUserDetails from "@/functions/FetchRequest/fetchUserDetails";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner2 from "@/components/utils/Spinner2";
 import TweetCard from "@/components/cards/Tweet";
@@ -18,7 +16,6 @@ function Page() {
   const { AllTweets, setAllTweets,Userinfo } = context;
   const fetchTweets=async()=>{
     try {
-      console.log('fetching tweets')
       setloading(true)
       const request=  await  fetch(`/api/get/getAllTweet?limit=${limit}&skip=${skip}`,{
         method:"GET",
@@ -48,7 +45,7 @@ function Page() {
     fetchTweets()
   }, []);
   return (
-   <div className="w-full border-white border-r-[1px] border-l-[1px]">
+   <div className="w-full scroll h-[145vh] border-[1px] border-[#6e6e6e] overflow-y-scroll">
     <h1 className=" font-bold text-xl mt-10 pl-10">Home</h1>
         <TweetInput setposted={setposted} setNewTweet={setNewTweet}/>
         {
@@ -59,7 +56,7 @@ function Page() {
           <InfiniteScroll dataLength={AllTweets.length} next={fetchTweets} hasMore={hasMore}>
                 {
                   AllTweets.map((e)=>{
-                    return  <TweetCard Key={e._id} text={e.Text} Usertag={e.postedBy.Usertag} authorPic={e.postedBy.Image} Username={e.postedBy.Username} Images={e.image} imageCount={e.imageAmount}/>
+                    return  <TweetCard Key={e._id} text={e.Text} Usertag={e.postedBy.Usertag} authorPic={e.postedBy.Image} author={e.postedBy._id} Username={e.postedBy.Username} Images={e.image} imageCount={e.imageAmount} type={"t"} Likes={e.Likes} CommentsNo={e.totalComments}/>
                   })
                 }
           </InfiniteScroll>
@@ -69,7 +66,7 @@ function Page() {
         <div className="flex w-full justify-center items-center">
           <Spinner2/>
         </div>
-        :<p className="text-md">no more comments</p>
+        :<p className="text-md text-center">no more comments</p>
         }
    </div>
   )

@@ -17,7 +17,10 @@ const AppState = ({ children }) => {
         Following:"",
         id:"",
         Like_list:[],
-        Usertag:""
+        Usertag:"",
+        Followers_list:[],
+        Following_list : [],
+        total_likes:0
     });
     const [Tweet, setTweet] = useState({
       Text:"",
@@ -25,9 +28,26 @@ const AppState = ({ children }) => {
       Image:[],
       ImageClient:[]
     });
+    const [Comment, setComment] = useState({
+      Text:"",
+      Author:"",
+      Image:[],
+      ImageClient:[]
+    });
+    const [SingleUserProfile, setSingleUserProfile] = useState({
+      Image:"",
+        Username:"",
+        Followers:"",
+        Following:"",
+        id:"",
+        Like_list:[],
+        Usertag:"",
+        Followers_list:[],
+        Following_list : []
+    });
     const [AllTweets, setAllTweets] = useState([]);
     return (
-      <AppContext.Provider value={{AuthPayload,setAuthPayload,Userinfo, setUserinfo,Tweet,setTweet,AllTweets, setAllTweets}}>
+      <AppContext.Provider value={{AuthPayload,setSingleUserProfile,SingleUserProfile,setAuthPayload,Userinfo, setUserinfo,Tweet,setTweet,AllTweets, setAllTweets,Comment,setComment}}>
         {children}
       </AppContext.Provider>
     );

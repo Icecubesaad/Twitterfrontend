@@ -129,7 +129,6 @@ body {
 .opt{
   width:80%;
   height:50px;
-  background-color:black;
   color:white;
   transition:all 300ms;
   display: flex;
@@ -148,8 +147,7 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   height: 50px;
-  background-color: white;
-  color: black;
+  color:  #1DA1F2;
   transition: all 300ms;
   display: flex;
   justify-content: left;
@@ -158,6 +156,9 @@ body {
   gap: 20px;
   font-family:"Montserrat", sans-serif;
   font-weight:500;
-  border: 1px solid white;
   border-radius: 12px;
+}
+/* Hide scroll bars */
+.scroll::-webkit-scrollbar {
+  display: none;
 }

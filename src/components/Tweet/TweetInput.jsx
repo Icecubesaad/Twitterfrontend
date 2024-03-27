@@ -5,17 +5,15 @@ import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import PollIcon from "@mui/icons-material/Poll";
 import Spinner2 from "../utils/Spinner2";
 import AppContext from "@/context/AppContext";
-import fetchUserDetails from "@/functions/FetchRequest/fetchUserDetails";
+import { useRouter } from "next/navigation";
 import { CircularProgress } from "@mui/material";
-const TweetInput = ({setposted,setNewTweet}) => {
+const TweetInput = ({ setposted, setNewTweet }) => {
   const context = useContext(AppContext);
   const { Tweet, setTweet, Userinfo, setUserinfo } = context;
   const [TweetLoading, setTweetLoading] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [imageCount, setImageCount] = useState(0); // State to track the number of images
-  const [ImageGrid, setImageGrid] = useState({
-    display: "flex",
-  });
+  const router = useRouter()
   useEffect(() => {
     setImageCount(Tweet.ImageClient.length);
   }, [Tweet.ImageClient]);
@@ -30,7 +28,13 @@ const TweetInput = ({setposted,setNewTweet}) => {
     return null;
   }
   const fetchUser = async (token) => {
-    const response = await fetchUserDetails(token);
+    const request = await fetch("/api/get/getUser", {
+      method: "GET",
+      headers: {
+        "token": token
+      }
+    });
+    const response = await request.json()
     if (response.success) {
       setUserinfo({
         Email: response.data.Email,
@@ -39,8 +43,9 @@ const TweetInput = ({setposted,setNewTweet}) => {
         Following: response.data.Following,
         Like_list: response.data.Like_list,
         id: response.data._id,
-        Username:response.data.Username,
-        Usertag:response.data.Usertag
+        Username: response.data.Username,
+        Usertag: response.data.Usertag,
+        total_likes : response.data.Total_likes
       });
       setLoading(false);
     } else {
@@ -117,19 +122,18 @@ const TweetInput = ({setposted,setNewTweet}) => {
     }
   };
   useEffect(() => {
-    console.log("component mounted");
     const token = getCookie("token");
     if (!token) {
       setLoading(false);
       router.push("/Login");
     } else {
-      if (Userinfo.Email === "") {
+      if (Userinfo.id === "") {
         fetchUser(token);
       }
     }
   }, []);
   return (
-    <div className="w-full h-[250px] flex flex-col mt-10 gap-10 pl-10 pr-10 ">
+    <div className="w-full h-auto flex flex-col mt-10 gap-5 pl-10 pr-10 ">
       <div className="w-full flex flex-row gap-4">
         <div className="w-[10%] flex">
           <div className="bg-slate-600 w-[50px] border-black h-[50px] border-[1px] rounded-full flex justify-center items-center mt-5">
@@ -158,7 +162,7 @@ const TweetInput = ({setposted,setNewTweet}) => {
       <div className="flex flex-row justify-between">
         <div className="flex flex-row gap-4">
           <button onClick={handleImageClick}>
-            <InsertPhotoIcon sx={{ fontSize: 30 }} />
+            <InsertPhotoIcon sx={{ fontSize: 25, color:"#1DA1F2" }} />
           </button>
           <input
             id="imageInput"
@@ -170,10 +174,10 @@ const TweetInput = ({setposted,setNewTweet}) => {
             multiple
           />
           <button>
-            <PollIcon sx={{ fontSize: 30 }} />
+            <PollIcon sx={{ fontSize: 25, color:"#1DA1F2" }} />
           </button>
           <button>
-            <InsertEmoticonIcon sx={{ fontSize: 30 }} />
+            <InsertEmoticonIcon sx={{ fontSize: 25, color:"#1DA1F2" }} />
           </button>
         </div>
         <div>

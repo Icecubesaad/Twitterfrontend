@@ -42,7 +42,7 @@ const AuthMain = () => {
             Following:response.data.Following,
             Like_list:response.data.Like_list
         })
-        router.push('/')
+        router.push('/home/tweets')
       } else {
         setLoading(false);
         setErrorMessage("Invalid  Crededentials");
