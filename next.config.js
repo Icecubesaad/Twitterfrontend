@@ -55,6 +55,11 @@ module.exports = {
         source:"/api/post/like/:id/:type",
         destination:"http://localhost:5000/api/post/like/:id/:type"
       }
+      ,
+      {
+        source:"/api/get/whoToFollow",
+        destination:"http://localhost:5000/api/get/whoToFollow"
+      }
     ]
   },
 }

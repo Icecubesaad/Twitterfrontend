@@ -59,7 +59,7 @@ function TweetCard({text,Username,Key,authorPic,Images,Usertag,imageCount,author
 
 
   return (
-    <div className='w-full h-auto flex flex-col border-[1px] pl-5 pb-5 border-[#6e6e6e]'>
+    <div className='w-full h-auto flex flex-col border-[1px] pl-5 pb-5 pr-5 border-[#6e6e6e]'>
         <div className='flex flex-row items-center'>
           <div className='bg-slate-600 w-[50px] border-black h-[40px] border-[1px] rounded-full flex justify-center items-center mt-5'>
           <Image
