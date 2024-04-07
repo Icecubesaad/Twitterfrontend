@@ -60,6 +60,26 @@ module.exports = {
         source:"/api/get/whoToFollow",
         destination:"http://localhost:5000/api/get/whoToFollow"
       }
+      ,
+      {
+        source:"/api/get/fetchSingleUserDetails/:id",
+        destination:"http://localhost:5000/api/get/getSingleUser/:id"
+      }
+      ,
+      {
+        source:"/api/get/fetchUserTweets/:id",
+        destination:"http://localhost:5000/api/get/getSingleUserTweets/:id"
+      }
+      ,
+      {
+        source:"/api/get/fetchUserReplies/:id",
+        destination:"http://localhost:5000/api/get/getSingleUserComments/:id"
+      }
+      ,
+      {
+        source:"/api/get/fetchUserLikes/:id",
+        destination:"http://localhost:5000/api/get/getSingleUserLikes/:id"
+      }
     ]
   },
 }

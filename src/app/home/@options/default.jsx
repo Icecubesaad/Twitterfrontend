@@ -6,8 +6,11 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import SettingsIcon from '@mui/icons-material/Settings';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AppContext from "@/context/AppContext";
 const Page = () => {
+  const context = useContext(AppContext)
+  const {Userinfo}=context
   const [ActiveTab, setActiveTab] = useState(1);
   const changeActiveTab = (currentId) => {
     const element_id = currentId + "opt";
@@ -79,7 +82,7 @@ const Page = () => {
             changeActive(3)
         }}
         className="opt"
-        href="#"
+        href={`/home/profile/${Userinfo.id}`}
         id="3opt"
       >
         <PermIdentityIcon /> Profile

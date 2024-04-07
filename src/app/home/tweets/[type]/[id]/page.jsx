@@ -187,11 +187,11 @@ const Page = ({ params }) => {
           </InfiniteScroll>
         )}
         {
-          loading&&Comments.length>0&&hasMore?
+          loading&&Comments.length>0&&hasMore&&SingleTweet.totalComments!==0?
         <div className="flex w-full justify-center items-center">
           <Spinner2/>
         </div>
-        :<p className="text-md text-center">no more comments</p>
+        :null
         }
       </div>
     )

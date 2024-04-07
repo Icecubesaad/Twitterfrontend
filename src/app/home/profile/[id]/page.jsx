@@ -4,10 +4,14 @@ import Image from 'next/image'
 import { useEffect, useState, useContext } from 'react'
 import fetchUserDetails from '@/functions/FetchRequest/fetchUserDetails';
 import AppContext from '@/context/AppContext';
+import Link from 'next/link';
+import Tweets from '@/components/profile/Tweets';
+import Comments from '@/components/profile/Comments';
+import Likes from '@/components/profile/Likes';
 function page({ params }) {
-    const [SameUser, setSameUser] = useState(false);
+    const [currentOption, setcurrentOption] = useState(<Tweets id={params.id}/>);
     const context = useContext(AppContext);
-    const { Userinfo, setSingleUserProfile, SingleUserProfile } = context
+    const { setSingleUserProfile, SingleUserProfile } = context
     const fetchSingleUserDetails = async () => {
         const request = await fetch(`/api/get/fetchSingleUserDetails/${params.id}`, {
             method: "GET"
@@ -26,57 +30,26 @@ function page({ params }) {
             }))
         }
         else {
-            // show some error
+            console.log(response)
         }
     }
-    const fetchSingleUserTweets = async () => {
-        const request = await fetch(`/api/get/fetchSingleUserDetails/${params.id}`, {
-            method: "GET"
-        })
-        const response = await request.json()
-        if (response.success) {
-            setSingleUserProfile((e) => ({
-                ...e,
-                Image: response.data.Image,
-                Followers: response.data.Followers,
-                Following: response.data.Following,
-                total_Likes: response.data.Total_likes,
-                id: response.data._id,
-                Username: response.data.Username,
-                Usertag: response.data.Usertag,
-            }))
+    const changeOption = (option)=>{
+        if(option === currentOption){
+            return
         }
-        else {
-            // show some error
+        else{
+            setcurrentOption(option)
         }
     }
     useEffect(() => {
-        if (params.id == Userinfo.id) {
-            setSameUser(true)
-            setSingleUserProfile((e => (
-                {
-                    ...e,
-                    Image: Userinfo.Image,
-                    Followers: Userinfo.Followers,
-                    Following: Userinfo.Following,
-                    total_Likes: Userinfo.total_likes,
-                    id: Userinfo.id,
-                    Username: Userinfo.Username,
-                    Usertag: Userinfo.Usertag,
-                }
-            )))
-        }
-        else {
             fetchSingleUserDetails()
-            fetchSingleUserTweets()
-        }
     }, []);
     return (
-        <div className='w-full h-[120vh]'>
-            <div className='banner bg-blue-500 h-[30%] w-full'></div>
+        <div className='w-full h-[130vh] overflow-y-scroll'>
+            <div className='banner bg-blue-500 h-[25%] w-full'></div>
             <div className='main bg-black'>
-                <div className='bg-blue-500 w-[125px] h-[125px] border-[1px] rounded-full relative top-[-55px]'>
-                    <Image src={SingleUserProfile.Image} alt='profile' width={75} height={75} />
+                <div className='bg-blue-500 w-[125px] h-[125px] flex justify-center items-center border-[1px] rounded-full relative top-[-55px]'>
+                    <Image src={SingleUserProfile.Image} alt='profile' height={125} width={125} className='border-[1px] border-transparent rounded-full'/>
                 </div>
                 <div>
                     <p>{SingleUserProfile.Username}</p>
@@ -85,35 +58,17 @@ function page({ params }) {
                 <p>
                     {/* make bio schema too */}
                 </p>
-                <div className='options flex flex-row justify-between'>
-                    <div>Tweets</div>
-                    <div>Replies</div>
-                    <div>Likes</div>
+                <div className='flex flex-row gap-10'>
+                    <Link href="#">{SingleUserProfile.Followers} followers</Link>
+                    <Link href="#">{SingleUserProfile.Following} following</Link>
                 </div>
-                <div className='w-full'>
-                    {/* fetch tweets and show it here */}
-                {/* <InfiniteScroll
-            dataLength={Comments.length}
-            next={fetchComments}
-            hasMore={hasMore}
-          >
-            {Comments.map((e) => {
-              return (
-                <TweetCard
-                  Key={e._id}
-                  text={e.Text}
-                  Usertag={e.postedBy.Usertag}
-                  authorPic={e.postedBy.Image}
-                  Username={e.postedBy.Username}
-                  Images={e.image}
-                  imageCount={e.imageAmount}
-                  type={"c"}
-                  Likes={e.Likes}
-                  CommentsNo={e.Comments}
-                />
-              );
-            })}
-          </InfiniteScroll> */}
+                <div className='options flex flex-row justify-between mt-5'>
+                    <button onClick={()=>{changeOption(<Tweets id={params.id} />)}}>Tweets</button>
+                    <button onClick={()=>{changeOption(<Comments id={params.id} />)}}>Replies</button>
+                    <button onClick={()=>{changeOption(<Likes id={params.id} />)}}>Likes</button>
+                </div>
+                <div className='w-full h-screen'>
+                    {currentOption}
                 </div>
             </div>
         </div>

@@ -66,7 +66,7 @@ function Page() {
         <div className="flex w-full justify-center items-center">
           <Spinner2/>
         </div>
-        :<p className="text-md text-center">no more comments</p>
+        :<p className="text-md text-center">no more tweets</p>
         }
    </div>
   )

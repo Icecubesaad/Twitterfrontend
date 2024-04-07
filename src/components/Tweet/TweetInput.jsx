@@ -36,6 +36,7 @@ const TweetInput = ({ setposted, setNewTweet }) => {
     });
     const response = await request.json()
     if (response.success) {
+      console.log(response)
       setUserinfo({
         Email: response.data.Email,
         Image: response.data.Image,

@@ -81,7 +81,7 @@ function TweetComment({id,UserId,setposted, setNewComment}) {
         }
       };
   return (
-    <div className="flex flex-col border-[1px] border-[#202427] pl-5 pr-5 pb-5">
+    <div className="flex flex-col border-[1px] border-[#6e6e6e] pl-5 pr-5 pb-5">
           <div className='flex flex-row items-center'>
             <div className='bg-slate-600 w-[50px] border-black h-[40px] border-[1px] rounded-full flex justify-center items-center mt-5'>
               <Image
