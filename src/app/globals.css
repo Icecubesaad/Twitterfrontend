@@ -158,6 +158,9 @@ body {
   font-weight:500;
   border-radius: 12px;
 }
+.optprofile.active{
+  color:  #1DA1F2;
+}
 /* Hide scroll bars */
 .scroll::-webkit-scrollbar {
   display: none;

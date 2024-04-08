@@ -1,8 +1,14 @@
+import SearchTweet from '@/components/Tweet/SearchTweet'
 import React from 'react'
 
 function page() {
   return (
-    <div>page</div>
+    <div className='h-screen w-full flex flex-col justify-center items-center'>
+      <div className='w-full h-[200px]'>
+        <SearchTweet/>
+      </div>
+      
+    </div>
   )
 }
 

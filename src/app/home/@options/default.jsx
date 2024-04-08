@@ -6,7 +6,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import SettingsIcon from '@mui/icons-material/Settings';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "@/context/AppContext";
 const Page = () => {
   const context = useContext(AppContext)
@@ -19,7 +19,7 @@ const Page = () => {
     
   };
   const changePreviousTab = (currentId) => {
-    if(ActiveTab===currentId){
+    if(ActiveTab==currentId){
         return null
     }
     else{
@@ -36,7 +36,14 @@ const Page = () => {
     const element_id_2=currentId+"opt"
     const element_to_change=window.document.getElementById(element_id_2);
     element_to_change.classList.add("active")
+    window.localStorage.setItem("activeTab",currentId)
   }
+  useEffect(() => {
+    if(localStorage.getItem("activeTab")){
+      setActiveTab(localStorage.getItem("activeTab"))
+      changeActive(localStorage.getItem("activeTab"))
+    }
+  }, []);
   return (
     <div className="w-full h-full flex flex-col p-5 mt-16 gap-3  items-center">
       <Link
@@ -49,7 +56,7 @@ const Page = () => {
         onClick={()=>{
             changeActive(1)
         }}
-        href="#"
+        href="/home/tweets"
         className="opt active"
         id="1opt"
       >
