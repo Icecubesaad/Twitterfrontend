@@ -28,7 +28,7 @@ function AccountSuggestion() {
         <div className='w-full flex flex-col gap-4'>
           {
             Accounts.length>0 ? Accounts.map((e)=>{
-              return <Account image={e.Image} Username={e.Username} Usertag={e.Usertag} />
+              return <Account image={e.Image} Username={e.Username} id={e._id} Usertag={e.Usertag} />
             }) :<div className='flex justify-center items-center'>
               <CircularProgress color='inherit' />
             </div>

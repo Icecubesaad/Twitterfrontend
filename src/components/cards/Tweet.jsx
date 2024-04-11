@@ -10,7 +10,9 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useState,useContext, useEffect } from 'react';
 import AppContext from '@/context/AppContext';
+import { useRouter } from 'next/navigation';
 function TweetCard({text,Username,Key,authorPic,Images,Usertag,imageCount,author,type,Likes,CommentsNo}) {
+  const router = useRouter()
   const [likeStatus, setlikeStatus] = useState(false);
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const context = useContext(AppContext);
@@ -59,10 +61,11 @@ function TweetCard({text,Username,Key,authorPic,Images,Usertag,imageCount,author
 
 
   return (
-    <div className='w-full h-auto flex flex-col border-[1px] pl-5 pb-5 pr-5 border-[#6e6e6e]'>
+    <div key={Key} className='w-full h-auto flex flex-col border-[1px] pl-5 pb-5 pr-5 border-[#6e6e6e]'>
         <div className='flex flex-row items-center'>
           <div className='bg-slate-600 w-[50px] border-black h-[40px] border-[1px] rounded-full flex justify-center items-center mt-5'>
           <Image
+                onClick={()=>{router.push(`/home/profile/${author}`)}}
                 src={authorPic}
                 width={50}
                 height={50}

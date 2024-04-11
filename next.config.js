@@ -80,6 +80,21 @@ module.exports = {
         source:"/api/get/fetchUserLikes/:id",
         destination:"http://localhost:5000/api/get/getSingleUserLikes/:id"
       }
+      ,
+      {
+        source:"/api/post/follow/:id/:follow",
+        destination:"http://localhost:5000/api/post/follow/:id/:follow"
+      }
+      ,
+      {
+        source:"/api/get/fetchFollowers/:id",
+        destination:"http://localhost:5000/api/get/getSingleUserFollowers/:id"
+      }
+      ,
+      {
+        source:"/api/get/fetchFollowing/:id",
+        destination:"http://localhost:5000/api/get/getSingleUserFollowing/:id"
+      }
     ]
   },
 }

@@ -36,7 +36,6 @@ const TweetInput = ({ setposted, setNewTweet }) => {
     });
     const response = await request.json()
     if (response.success) {
-      console.log(response)
       setUserinfo({
         Email: response.data.Email,
         Image: response.data.Image,
@@ -46,7 +45,9 @@ const TweetInput = ({ setposted, setNewTweet }) => {
         id: response.data._id,
         Username: response.data.Username,
         Usertag: response.data.Usertag,
-        total_likes : response.data.Total_likes
+        total_likes : response.data.Total_likes,
+        Followers_list: response.data.Follower_list,
+        Following_list: response.data.Following_list
       });
       setLoading(false);
     } else {

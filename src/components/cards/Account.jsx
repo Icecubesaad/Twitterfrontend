@@ -1,10 +1,11 @@
 import Image from "next/image";
 import React from "react";
-
-function Account({ Username, image, Usertag,loading }) {
+import { useRouter } from "next/navigation";
+function Account({ Username, image, Usertag,id }) {
+  const router = useRouter()
   return (
-    <div className="w-full flex flex-row pr-5">
-      <div className="flex flex-row w-full items-center gap-3">
+    <div className="w-full flex flex-row pr-5 items-center">
+      <div onClick={()=>{router.push(`/home/profile/${id}`)}} className="flex flex-row w-full items-center gap-3 cursor-pointer">
         <div className="bg-slate-600 w-[70px] border-black border-[1px] rounded-full flex justify-center items-center mt-5">
           <Image src={image} width={70} height={70} alt="profile" className="border-[1px] border-transparent rounded-full" />
         </div>

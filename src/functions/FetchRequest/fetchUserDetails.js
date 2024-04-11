@@ -7,6 +7,7 @@ const fetchUserDetails=async(token)=>{
         }
     })
     const response=await request.json()
+    console.log(response,"from somehw")
     return response
 }
 export default fetchUserDetails

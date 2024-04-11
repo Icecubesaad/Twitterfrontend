@@ -4,6 +4,8 @@ import { useState,useEffect,useContext } from "react";
 import AppContext from "@/context/AppContext";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner2 from "@/components/utils/Spinner2";
+import { CircularProgress } from '@mui/material';
+
 import TweetCard from "@/components/cards/Tweet";
 function Page() {
   const context = useContext(AppContext);
@@ -52,7 +54,7 @@ function Page() {
           !posted? null : <TweetCard Key={NewTweet._id} text={NewTweet.Text} Usertag={Userinfo.Username} authorPic={Userinfo.Image} Username={Userinfo.Username} Images={NewTweet.image} imageCount={NewTweet.imageAmount} />
         }
         {
-          AllTweets.length===0?<div className="w-full h-[100px] flex flex-row justify-center items-center"><Spinner2/></div>:
+          AllTweets.length===0?<div className="w-full h-[100px] flex flex-row justify-center items-center"><CircularProgress/></div>:
           <InfiniteScroll dataLength={AllTweets.length} next={fetchTweets} hasMore={hasMore}>
                 {
                   AllTweets.map((e)=>{
@@ -64,9 +66,9 @@ function Page() {
         {
           loading&&AllTweets.length>0&&hasMore?
         <div className="flex w-full justify-center items-center">
-          <Spinner2/>
+          <CircularProgress/>
         </div>
-        :<p className="text-md text-center">no more tweets</p>
+        :loading?null:<p className="text-md text-center">no more tweets</p>
         }
    </div>
   )
